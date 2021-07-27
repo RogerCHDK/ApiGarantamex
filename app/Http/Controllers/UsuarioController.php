@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -14,7 +15,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $usuario = Usuario::all();
+        return response()->json([
+            'usuario'=> $usuario
+        ]);
     }
 
     /**
@@ -25,7 +29,27 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuario = Usuario::create([
+            'nombre' => $request->nombre ,
+            'apellido_paterno' => $request->apellido_paterno ,
+            'apellido_materno' => $request->apellido_materno ,
+            'email' => $request->email ,
+            'telefono' => $request->telefono ,
+            'password' =>  Hash::make($request->password),
+            'ciudad' => $request->ciudad ,
+            'estado' => $request->estado ,
+            'calle' => $request->calle ,
+            'codigo_postal' => $request->codigo_postal ,
+            'numero_interior' => $request->numero_interior ,
+            'numero_exterior' => $request->numero_exterior ,
+            'tipo_usuario_id' => 1 ,
+            'status' => 1 ,
+        ]);
+
+        // return response()->json([
+        //     'message' => 'Ok'
+        // ]);
+        return response()->json($usuario, 201);
     }
 
     /**

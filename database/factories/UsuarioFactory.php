@@ -22,7 +22,20 @@ class UsuarioFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' =>  $this->faker->name(),
+            'apellido_paterno' => $this->faker->lastName(),
+            'apellido_materno' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'telefono' =>  $this->faker->phoneNumber() ,
+            'password' =>  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' ,
+            'ciudad' =>  $this->faker->city() ,
+            'estado' =>  $this->faker->state() ,
+            'calle' =>  $this->faker->streetName() ,
+            'codigo_postal' => $this->faker->randomNumber(5, true) ,
+            'numero_interior' => $this->faker->randomNumber(2, false) ,
+            'numero_exterior' => $this->faker->randomNumber(2, false) ,
+            'tipo_usuario_id' => 1 ,
+            'status' => 1 ,
         ];
     }
 }
