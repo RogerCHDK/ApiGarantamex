@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsuarioPostRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,8 +28,10 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuarioPostRequest $request)
     {
+        $request->validated();
+
         $usuario = Usuario::create([
             'nombre' => $request->nombre ,
             'apellido_paterno' => $request->apellido_paterno ,
@@ -46,10 +49,9 @@ class UsuarioController extends Controller
             'status' => 1 ,
         ]);
 
-        // return response()->json([
-        //     'message' => 'Ok'
-        // ]);
-        return response()->json($usuario, 201);
+        return response()->json([
+            'message' => 'Ok'
+        ], 201);
     }
 
     /**
@@ -60,7 +62,9 @@ class UsuarioController extends Controller
      */
     public function show(Usuario $usuario)
     {
-        //
+        return response()->json([
+            'usuario' => $usuario
+        ],200);
     }
 
     /**
@@ -72,7 +76,11 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, Usuario $usuario)
     {
-        //
+        $usuario->update($request->all());
+        
+        return response()->json([
+            'message' => "Usuario actualizado correctamente"
+        ], 200);
     }
 
     /**
@@ -83,6 +91,7 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        $usuario->delete();
+        return response()->json(null, 204);
     }
 }
