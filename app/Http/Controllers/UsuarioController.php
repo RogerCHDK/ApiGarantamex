@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsuarioPostRequest;
+use App\Http\Resources\UsuarioCollection;
+use App\Http\Resources\UsuarioResource;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,9 +19,15 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuario = Usuario::all();
-        return response()->json([
-            'usuario'=> $usuario
-        ]);
+        // Forma normal de regresar la informacion
+        // return response()->json([
+        //     'data'=> $usuario
+        // ]);
+        // Las colecciones son para mandar varios registros
+        // Podemos usar el metodo collection de un resource para mandarlo
+        // return UsuarioResource::collection($usuario);
+        // O crear una coleccion propia
+        return new UsuarioCollection($usuario);
     }
 
     /**
@@ -62,9 +70,12 @@ class UsuarioController extends Controller
      */
     public function show(Usuario $usuario)
     {
-        return response()->json([
-            'usuario' => $usuario
-        ],200);
+        // return response()->json([
+        //     'data' => $usuario
+        // ],200);
+
+        // Los resources son para mandar un solo registro
+        return new UsuarioResource($usuario);
     }
 
     /**

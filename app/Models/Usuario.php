@@ -13,4 +13,10 @@ class Usuario extends Model
                             'email','telefono','password',
                             'ciudad','estado','calle','codigo_postal',
                         'numero_interior','numero_exterior','tipo_usuario_id','status'];
+
+                        
+    public function getNombreCompletoAttribute()
+    {
+        return $this->nombre.' '.$this->apellido_paterno.' '.$this->apellido_materno;
+    }
 }
